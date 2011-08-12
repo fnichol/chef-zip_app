@@ -54,7 +54,31 @@ installed   |(internal) |`false`
 
 ## Examples
 
-Coming soon...
+### Install Basic App
+
+    zip_app_package "Divvy" do
+      source  "http://mizage.com/divvy/downloads/Divvy.zip"
+    end
+
+**Note:** the install action is default.
+
+### Install App To Custom Destination
+
+    zip_app_package "GitHub" do
+      source      "https://github-central.s3.amazonaws.com/mac/GitHub%20for%20Mac%201.0.6.zip"
+      checksum    "1e95b3c16915efe171e53c2de31ae5b0b45cca6689a6923baa96cf754a06ed73"
+      destination "#{ENV['HOME']}/Applications"
+    end
+
+**Note:** *GitHub.app* will be installed to `~/Applications/GitHub.app`,
+and assumes that the directory exists.
+
+# Credits
+
+This cookbook and LWRP patterns are heavily lifted with love from the
+[dmg][dmg_cb], [iterm2][iterm2_cb], [1password][1password_cb], and
+[ghmac][ghmac_cb] cookbooks. Oh, and Joshua Timberman's
+[workstation][workstation] blog post.
 
 # Development
 
@@ -82,5 +106,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[repo]:     https://github.com/fnichol/chef-zip_app
-[issues]:   https://github.com/fnichol/chef-zip_app/issues
+[1password_cb]: http://community.opscode.com/cookbooks/1password
+[dmg_cb]:       http://community.opscode.com/cookbooks/dmg
+[ghmac_cb]:     http://community.opscode.com/cookbooks/ghmac
+[iterm_cb]:     http://community.opscode.com/cookbooks/iterm2
+[workstation]:  http://jtimberman.posterous.com/managing-my-workstations-with-chef
+
+[repo]:         https://github.com/fnichol/chef-zip_app
+[issues]:       https://github.com/fnichol/chef-zip_app/issues
