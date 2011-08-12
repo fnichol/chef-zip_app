@@ -109,7 +109,7 @@ limitations under the License.
 [1password_cb]: http://community.opscode.com/cookbooks/1password
 [dmg_cb]:       http://community.opscode.com/cookbooks/dmg
 [ghmac_cb]:     http://community.opscode.com/cookbooks/ghmac
-[iterm_cb]:     http://community.opscode.com/cookbooks/iterm2
+[iterm2_cb]:    http://community.opscode.com/cookbooks/iterm2
 [workstation]:  http://jtimberman.posterous.com/managing-my-workstations-with-chef
 
 [repo]:         https://github.com/fnichol/chef-zip_app
