@@ -17,15 +17,13 @@
 # limitations under the License.
 #
 
-bag_item = begin
-  data_bag_item(*node['zip_app']['data_bag'])
+bag       = node['zip_app']['data_bag']
+bag_item  = begin
+  data_bag_item(*bag)
 rescue => ex
-  Chef::Log.info(
-    "Data bag #{node['zip_app']['data_bag'].join('/')} was not found due to: " +
-    "#{ex.inspect}, so skipping")
-  {'zip_apps' => []}
+  Chef::Log.info("Data bag #{bag.join('/')} not found (#{ex}), so skipping")
+  Hash.new
 end
 
-node['zip_app']['apps'] += bag_item['zip_apps']
-
-include 'zip_app'
+node['zip_app']['apps'] += Array(bag_item['zip_apps'])
+include_recipe 'zip_app'
