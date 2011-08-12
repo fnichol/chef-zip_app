@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zip_app
-# Recipe:: default
+# Recipe:: data_bag
 #
 # Copyright 2011, Fletcher Nichol
 #
@@ -17,10 +17,15 @@
 # limitations under the License.
 #
 
-node['zip_app']['apps'].each do |app_hash|
-  zip_app_package app_hash['app'] do
-    %w{source zip_file destination checksum}.each do |attr|
-      send(attr, app_hash[attr])  if app_hash[attr]
-    end
-  end
+bag_item = begin
+  data_bag_item(*node['zip_app']['data_bag'])
+rescue => ex
+  Chef::Log.info(
+    "Data bag #{node['zip_app']['data_bag'].join('/')} was not found due to: " +
+    "#{ex.inspect}, so skipping")
+  {'zip_apps' => []}
 end
+
+node['zip_app']['apps'] += bag_item['zip_apps']
+
+include 'zip_app'

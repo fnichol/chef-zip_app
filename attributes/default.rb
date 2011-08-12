@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zip_app
-# Recipe:: default
+# Attributes:: default
 #
 # Copyright 2011, Fletcher Nichol
 #
@@ -17,10 +17,6 @@
 # limitations under the License.
 #
 
-node['zip_app']['apps'].each do |app_hash|
-  zip_app_package app_hash['app'] do
-    %w{source zip_file destination checksum}.each do |attr|
-      send(attr, app_hash[attr])  if app_hash[attr]
-    end
-  end
-end
+default['zip_app']['apps']      = []
+
+default['zip_app']['data_bag']  = ['apps', node['platform']]
