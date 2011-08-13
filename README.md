@@ -1,6 +1,6 @@
 # Description
 
-LWRP to install Mac OS X applications from zip archives
+LWRP to install Mac OS X applications from zip archives.
 
 # Requirements
 
@@ -16,18 +16,18 @@ Only for `node[:platform] == "mac_os_x"` platforms. Tested on Mac OS X 10.7
 
 ## Cookbooks
 
-There are no external cookbook dependencies.
+There are **no** external cookbook dependencies.
 
 # Usage
 
-Simply include the `recipe[zip_app]` cookbook in your run_list and the
+Simply include `recipe[zip_app]` in your run_list and the
 `zip_app_package` resource will be available.
 
-To use `recipe[zip_app::data_bag]`, include it and have a data bag called `apps`
-with an item called `"mac_os_x"` like the following:
+To use `recipe[zip_app::data_bag]`, include it in your run_list and have a
+data bag called `"apps"` with an item called `"mac_os_x"` like the following:
 
     {
-      "id"  : "mac_os_x",
+      "id"        : "mac_os_x",
       "zip_apps"  : [
         { "name"        : "iTerm",
           "source"      : "http://iterm2.googlecode.com/files/iTerm2_v1_0_0.zip",
