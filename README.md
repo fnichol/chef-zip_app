@@ -40,7 +40,6 @@ This recipe is a no-op and does nothing.
 Action    |Description                   |Default
 ----------|------------------------------|-------
 install   |Download and extract the `*.app` application into the destination directory. |Yes
-
 ## Attributes
 
 Attribute   |Description |Default value
