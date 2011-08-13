@@ -23,13 +23,68 @@ There are no external cookbook dependencies.
 Simply include the `recipe[zip_app]` cookbook in your run_list and the
 `zip_app_package` resource will be available.
 
+To use `recipe[zip_app::data_bag]`, include it and have a data bag called `apps`
+with an item called `"mac_os_x"` like the following:
+
+    {
+      "id"  : "mac_os_x",
+      "zip_apps"  : [
+        { "name"        : "iTerm",
+          "source"      : "http://iterm2.googlecode.com/files/iTerm2_v1_0_0.zip",
+          "checksum"    : "2afad022b1e1f08b3ed40f0c2bde7bf7cce003852c83f85948c7f57a5578d9c5"
+        },
+        { "name"        : "Divvy",
+          "source"      : "http://mizage.com/divvy/downloads/Divvy.zip"
+        }
+      ]
+    }
+
+Alternatively, you can override the data bag and item by setting the
+`node['zip_app']['data_bag']` attribute to some like:
+
+    node['zip_app']['data_bag'] = ['apps', "workstation-mac"]
+
 # Recipes
 
 ## default
 
-This recipe is a no-op and does nothing.
+Processes a list of *zip_apps* (which is emtpy by default) to be installed.
+
+Use this recipe when you have a list of apps in `node['zip_app']['apps']` or
+when all you need is the `zip_app_package` LWRP.
+
+## data_bag
+
+Fetches an list of *zip_apps* from a data bag item and appends it to the
+`node['zip_app']['apps']` attribute for processing. This recipe then includes
+the default recipe, so there is no need to explicitly include `recipe[zip_app]`.
+
+Use this recipe when you want data bag driven data in your workflow.
 
 # Attributes
+
+## `apps`
+
+An array of zip_app hashes. The keys in the hashes correspond to the attributes
+passed to the `zip_app_package` LWRP. For example:
+
+    node['zip_app']['apps'] = [
+      { 'name'      => 'iTerm',
+        'source'    => 'http://iterm2.googlecode.com/files/iTerm2_v1_0_0.zip',
+        'checksum'  => '2afad022b1e1f08b3ed40f0c2bde7bf7cce003852c83f85948c7f57a5578d9c5'
+      },
+      { 'name'      => 'GitHub',
+        'source'    => 'https://github-central.s3.amazonaws.com/mac/GitHub%20for%20Mac%201.0.6.zip',
+        'checksum'  => '1e95b3c16915efe171e53c2de31ae5b0b45cca6689a6923baa96cf754a06ed73'
+      }
+    ]
+
+The default is an empty Array: `[]`.
+
+## `data_bag`
+
+The data bag and item containing a list of apps to be installed.. This is used
+by the `data_bag` recipe. The default is `['apps', node['platform']]`.
 
 # Resources and Providers
 
