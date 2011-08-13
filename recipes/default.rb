@@ -18,7 +18,7 @@
 #
 
 node['zip_app']['apps'].each do |app_hash|
-  zip_app_package app_hash['app'] do
+  zip_app_package app_hash['name'] do
     %w{source zip_file destination checksum}.each do |attr|
       send(attr, app_hash[attr])  if app_hash[attr]
     end
