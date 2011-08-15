@@ -90,12 +90,12 @@ by the `data_bag` recipe. The default is `['apps', node['platform']]`.
 
 ## zip_app_package
 
-## Actions
+### Actions
 
 Action    |Description                   |Default
 ----------|------------------------------|-------
 install   |Download and extract the `*.app` application into the destination directory. |Yes
-## Attributes
+### Attributes
 
 Attribute   |Description |Default value
 ------------|------------|-------------
@@ -106,9 +106,9 @@ destination |The base path to where the application will be installed. |`"/Appli
 zip_file    |(optional) The zip file name if it differs from the the last path fragment in the `source` URL. |`nil`
 installed   |(internal) |`false`
 
-## Examples
+### Examples
 
-### Install Basic App
+#### Install Basic App
 
     zip_app_package "Divvy" do
       source  "http://mizage.com/divvy/downloads/Divvy.zip"
@@ -116,7 +116,7 @@ installed   |(internal) |`false`
 
 **Note:** the install action is default.
 
-### Install App To Custom Destination
+#### Install App To Custom Destination
 
     zip_app_package "GitHub" do
       source      "https://github-central.s3.amazonaws.com/mac/GitHub%20for%20Mac%201.0.6.zip"
