@@ -18,6 +18,64 @@ Only for `node[:platform] == "mac_os_x"` platforms. Tested on Mac OS X 10.7
 
 There are **no** external cookbook dependencies.
 
+# Installation
+
+Depending on the situation and use case there are several ways to install
+this cookbook. All the methods listed below assume a tagged version release
+is the target, but omit the tags to get the head of development. A valid
+Chef repository structure like the [Opscode repo][chef_repo] is also assumed.
+
+## From the Opscode Community Platform
+
+To install this cookbook from the Opscode platform, use the *knife* command:
+
+    knife cookbook site install zip_app
+
+## Using Librarian
+
+The [Librarian][librarian] gem aims to be Bundler for your Chef cookbooks.
+Include a reference to the cookbook in a **Cheffile** and run
+`librarian-chef install`. To install with Librarian:
+
+    gem install librarian
+    cd chef-repo
+    librarian-chef init
+    cat >> Cheffile <<END_OF_CHEFFILE
+    cookbook 'zip_app',
+      :git => 'git://github.com/fnichol/chef-zip_app.git', :ref => 'v0.2.0'
+    END_OF_CHEFFILE
+    librarian-chef install
+
+## Using knife-github-cookbooks
+
+The [knife-github-cookbooks][kgc] gem is a plugin for *knife* that supports
+installing cookbooks directly from a GitHub repository. To install with the
+plugin:
+
+    gem install knife-github-cookbooks
+    cd chef-repo
+    knife cookbook github install fnichol/chef-zip_app/v0.2.0
+
+## As a Git Submodule
+
+A common practice (which is getting dated) is to add cookbooks as Git
+submodules. This is accomplishes like so:
+
+    cd chef-repo
+    git submodule add git://github.com/fnichol/chef-zip_app.git cookbooks/zip_app
+    git submodule init && git submodule update
+
+**Note:** the head of development will be linked here, not a tagged release.
+
+## As a Tarball
+
+If the cookbook needs to downloaded temporarily just to be uploaded to a Chef
+Server or Opscode Hosted Chef, then a tarball installation might fit the bill:
+
+    cd chef-repo/cookbooks
+    curl -Ls https://github.com/fnichol/chef-zip_app/tarball/v0.2.0 | tar xfz - && \
+      mv fnichol-chef-zip_app-* zip_app
+
 # Usage
 
 Simply include `recipe[zip_app]` in your run_list and the
@@ -162,8 +220,11 @@ limitations under the License.
 
 [1password_cb]: http://community.opscode.com/cookbooks/1password
 [dmg_cb]:       http://community.opscode.com/cookbooks/dmg
+[chef_repo]:    https://github.com/opscode/chef-repo
 [ghmac_cb]:     http://community.opscode.com/cookbooks/ghmac
 [iterm2_cb]:    http://community.opscode.com/cookbooks/iterm2
+[kgc]:          https://github.com/websterclay/knife-github-cookbooks#readme
+[librarian]:    https://github.com/applicationsonline/librarian#readme
 [workstation]:  http://jtimberman.posterous.com/managing-my-workstations-with-chef
 
 [repo]:         https://github.com/fnichol/chef-zip_app
