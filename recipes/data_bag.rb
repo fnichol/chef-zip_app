@@ -25,5 +25,5 @@ rescue => ex
   Hash.new
 end
 
-node['zip_app']['apps'] += Array(bag_item['zip_apps'])
+node.set['zip_app']['apps'] = Array(bag_item['zip_apps'])
 include_recipe 'zip_app'
